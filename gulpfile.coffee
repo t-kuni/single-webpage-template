@@ -1,13 +1,15 @@
-gulp = require 'gulp'
-gutil = require 'gulp-util'
-jade = require 'gulp-jade'
-sass = require 'gulp-sass'
-coffee = require 'gulp-coffee'
+gulp          = require 'gulp'
+gutil         = require 'gulp-util'
+jade          = require 'gulp-jade'
+sass          = require 'gulp-sass'
+coffee        = require 'gulp-coffee'
 mochaSelenium = require 'gulp-mocha'
+webserver     = require 'gulp-webserver'
+bower         = require 'main-bower-files'
+browserify    = require 'gulp-browserify'
+rename        = require 'gulp-rename'
+Server        = require('karma').Server
 require('coffee-script/register')
-Server = require('karma').Server
-webserver = require 'gulp-webserver'
-bower = require 'main-bower-files'
 
 gulp.task 'default', ['build', 'watch']
 
@@ -16,7 +18,7 @@ gulp.task 'build', ['jade', 'sass', 'coffee', 'bower']
 gulp.task 'jade', ->
   gulp.src 'src/jade/*.jade'
     .pipe jade
-        locals: {}
+      locals: {}
     .pipe gulp.dest 'dist/'
 
 gulp.task 'sass', ->
@@ -25,9 +27,13 @@ gulp.task 'sass', ->
     .pipe gulp.dest 'dist/css/'
 
 gulp.task 'coffee', ->
-  gulp.src 'src/coffee/*.coffee'
-    .pipe coffee({bare: true}).on 'error', gutil.log
-    .pipe gulp.dest 'dist/js/'
+  gulp.src 'src/coffee/*.coffee', {read: false}
+    .pipe browserify
+      transform: ['coffeeify', 'jadeify'],
+      extensions: ['.coffee']
+    .pipe rename
+      extname: '.js'
+    .pipe gulp.dest 'dist/js'
 
 gulp.task 'karma', (done) ->
   new Server
@@ -52,6 +58,7 @@ gulp.task 'bower', ->
 gulp.task 'webserver', ->
   gulp.src 'dist'
     .pipe webserver
+      host: '0.0.0.0'
       livereload: true,
       directoryListing:
         path: 'dist'
@@ -60,5 +67,5 @@ gulp.task 'webserver', ->
 gulp.task 'watch', ['webserver'], ->
   gulp.watch 'src/jade/*.jade', ['jade', 'test']
   gulp.watch 'src/sass/*.sass', ['sass', 'test']
-  gulp.watch 'src/coffee/*.coffee', ['coffee', 'test']
+  gulp.watch ['src/coffee/*.coffee', 'src/jade/template/*.jade'], ['coffee', 'test']
   gulp.watch 'test/*.coffee', ['test']
