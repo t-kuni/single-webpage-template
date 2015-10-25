@@ -13,7 +13,11 @@ require('coffee-script/register')
 
 gulp.task 'default', ['build', 'watch']
 
-gulp.task 'build', ['jade', 'sass', 'coffee', 'bower']
+gulp.task 'build', ['img', 'jade', 'sass', 'coffee', 'bower']
+
+gulp.task 'img', ->
+  gulp.src 'img/**/*'
+    .pipe gulp.dest 'dist/img'
 
 gulp.task 'jade', ->
   gulp.src 'src/jade/*.jade'
@@ -65,6 +69,7 @@ gulp.task 'webserver', ->
       open: false
 
 gulp.task 'watch', ['webserver'], ->
+  gulp.watch 'img/*', ['img']
   gulp.watch 'src/jade/*.jade', ['jade', 'test']
   gulp.watch 'src/sass/*.sass', ['sass', 'test']
   gulp.watch ['src/coffee/*.coffee', 'src/jade/template/*.jade'], ['coffee', 'test']
