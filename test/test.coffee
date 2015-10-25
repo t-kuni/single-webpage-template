@@ -34,6 +34,11 @@ test.describe 'TOPページのテスト（サンプル）', ->
     driver.findElement(By.id 'message').getText().then (data) ->
       data.should.equal('こんにちは')
 
+  test.it 'メッセージ2(jsで遅延表示)が表示されているか', -> 
+    driver.get 'http://localhost:8000'
+    driver.findElement(By.id 'message2').getText().then (data) ->
+      data.should.equal('coffeeからこんにちは')
+
   test.it 'メッセージ3が表示されているか', -> 
     driver.get 'http://localhost:8000'
     driver.findElement(By.id 'message3').getText().then (data) ->

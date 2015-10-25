@@ -19,6 +19,7 @@
     "jasmine-core": "^2.3.4",
     "karma-coffee-preprocessor": "^0.3.0",
     "karma-jasmine": "^0.3.6",
+    "main-bower-files": "^2.9.0",
     "selenium-webdriver": "^2.48.0"
   }
 }

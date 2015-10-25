@@ -7,10 +7,11 @@ mochaSelenium = require 'gulp-mocha'
 require('coffee-script/register')
 Server = require('karma').Server
 webserver = require 'gulp-webserver'
+bower = require 'main-bower-files'
 
 gulp.task 'default', ['build', 'watch']
 
-gulp.task 'build', ['jade', 'sass', 'coffee']
+gulp.task 'build', ['jade', 'sass', 'coffee', 'bower']
 
 gulp.task 'jade', ->
   gulp.src 'src/jade/*.jade'
@@ -43,6 +44,10 @@ gulp.task 'test', ->
     # reporter: 'nyan'
     useSystemPhantom: true
     timeout: '30000'
+
+gulp.task 'bower', ->
+  gulp.src bower()
+    .pipe gulp.dest 'dist/lib'
 
 gulp.task 'webserver', ->
   gulp.src 'dist'
