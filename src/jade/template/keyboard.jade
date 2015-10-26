@@ -1,4 +1,20 @@
 #keyboard-board
   - for (var i = 0; i< 12; i++) {
-    div(id="keyboard-key-#{i}")
+    - var classHighlight = highlightKeys[i] ? 'keyboard-key-highlight' : '';
+    - var keyTopOrBottomList = [
+    -   'bottom',
+    -   'top',
+    -   'bottom',
+    -   'top',
+    -   'bottom',
+    -   'bottom',
+    -   'top',
+    -   'bottom',
+    -   'top',
+    -   'bottom',
+    -   'top',
+    -   'bottom'
+    - ];
+    - var classKeyTopOrBottom = 'keyboard-key-' + keyTopOrBottomList[i % 12]
+    .keyboard-key(id="keyboard-key-#{i}", class=[classKeyTopOrBottom, classHighlight], data-index=i)
   - }

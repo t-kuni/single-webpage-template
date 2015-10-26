@@ -9,4 +9,5 @@ $ ->
       'background-color': '#0F0'
   
   $ 'body'
-    .append keyboard()
+    .append keyboard
+      highlightKeys: [false, true, true, true, true, true, true, true, true, true, true, true]

@@ -2,3 +2,43 @@
   width: 100px
   height: 100px
   background-color: #F00
+
+$boardHeight: 50px
+$keyWidth: 30px
+$topKeyHeight: 30px
+
+#keyboard-board
+  position: relative
+  width: $keyWidth * 24
+  height: $boardHeight
+  border: 3px solid #000
+  background-color: #FFF
+  z-index: 0
+
+.keyboard-key
+  position: absolute
+  top: 0px
+  width: 30px
+  border: 1px solid #000
+
+.keyboard-key:hover
+  background-color: #0F0
+
+#keyboard-key-0, #keyboard-key-2, #keyboard-key-4, #keyboard-key-5, #keyboard-key-7, #keyboard-key-9, #keyboard-key-11
+  height: 50px
+  background-color: #FFF
+  z-index: 1
+
+#keyboard-key-1, #keyboard-key-3, #keyboard-key-6, #keyboard-key-8, #keyboard-key-10
+  height: 30px
+  z-index: 2
+  background-color: #888
+
+
+@for $i from 0 through 4
+  #keyboard-key-#{$i}
+    left: ($keyWidth / 2) * $i
+
+@for $i from 5 through 11
+  #keyboard-key-#{$i}
+    left: ($keyWidth / 2) * ($i + 1)
