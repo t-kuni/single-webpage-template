@@ -48,11 +48,11 @@ gulp.task 'karma', (done) ->
   .start()
 
 gulp.task 'test', ->
-  gulp.src 'test/test.coffee',
+  gulp.src 'test/*.coffee',
     read:false
   .pipe mochaSelenium
     # reporter: 'nyan'
-    useSystemPhantom: true
+    useSystemPhantom: false
     timeout: '30000'
 
 gulp.task 'bower', ->
